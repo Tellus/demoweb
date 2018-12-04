@@ -1,0 +1,5 @@
+name: Array test
+description: Simply selects an array made from query string elements.
+query: >-
+  select %(content|asarray)s
+result: full

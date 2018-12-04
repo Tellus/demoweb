@@ -1,0 +1,12 @@
+name: segment
+query: >-
+  select
+    segmentkey,
+    st_asgeojson(segmentgeo)::json,
+    startpoint,
+    endpoint
+  from
+    maps.osm_dk_latest
+  where
+    segmentkey=%(segmentkey)s
+result: single

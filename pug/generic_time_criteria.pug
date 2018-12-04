@@ -1,0 +1,114 @@
+#time-sidebar.sidebar.collapsed.generic-time-sidebar
+  .sidebar-tabs
+    ul(role="tablist")
+      li
+        a(href="#temporal-criteria-tab", role="tab")
+          i.fa.fa-clock-o
+  .sidebar-content
+    #temporal-criteria-tab.sidebar-pane
+      h1.sidebar-header Temporal Selection
+        span.sidebar-close
+          i.fa.fa-caret-left
+      form#temporal-filter-form
+        div.form-group
+          h4 Time of Day
+          #time-of-day-label.text-center
+            span#fromtime X
+            |  to  
+            span#totime Y
+          section#range-slider.range-slider
+            span.range-values
+              input#fromtime-slider(name="time_from", type="range",
+                                    value="0", min="0", max="1440",
+                                    step="15", data-display="#fromtime",
+                                    data-slider-rel="min")
+              input#totime-slider(name="time_to", type="range",
+                                    value="1440", min="0", max="1440",
+                                    step="15", data-display="#totime",
+                                    data-slider-rel="max")
+          #tod-presets.btn-group.btn-group-justified.btn-group-sm
+            a.btn.btn-default.tod-preset(type="button", data-from="420",
+                                         data-to="540") Morning
+            a.btn.btn-default.tod-preset(type="button", data-from="930",
+                                         data-to="1050") Afternoon
+            a.btn.btn-default.tod-preset(type="button", data-from="0",
+                                         data-to="1440") All day
+        #weekdays.form-group
+          h4
+            .dropdown
+              span Weekdays
+              button.btn.btn-link.dropdown-toggle(type="button", id="month-preset-dropdown", data-toggle="dropdown")
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.weekday-preset(type="button", data-target="#weekdays", data-days="monday,tuesday,wednesday,thursday,friday,saturday,sunday") All
+                li.divider
+                li  
+                  a.weekday-preset(type="button", data-target="#weekdays", data-days="monday,tuesday,wednesday,thursday,friday") Workdays
+                li
+                  a.weekday-preset(type="button", data-target="#weekdays", data-days="saturday,sunday") Weekend
+          div.btn-group.btn-group-justified(data-toggle="buttons")
+            each val in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+              label.btn.btn-default.btn-sm(class=['saturday', 'sunday'].indexOf(val) == -1 ? "active" : null)
+                input.weekday-toggle(id="weekday-"+val, name="weekday", type="checkbox", value=val, checked=['saturday', 'sunday'].indexOf(val) == -1 ? "" : null)
+                | #{val[0].toUpperCase()}
+        #months.form-group
+          h4
+            .dropdown
+              span Months
+              button.btn.btn-link.dropdown-toggle(type="button", id="month-preset-dropdown", data-toggle="dropdown")
+                span.caret
+              ul.dropdown-menu
+                li
+                  a.month-preset(type="button",
+                                          data-target="#months",
+                                          data-months="january,february,march,april,may,june,july,august,september,october,november,december") All
+                li.divider
+                li
+                  a.month-preset(type="button",
+                                          data-target="#months",
+                                          data-months="march,april,may") Spring
+                li
+                  a.month-preset(type="button",
+                                          data-target="#months",
+                                          data-months="june,july,august") Summer
+                li
+                  a.month-preset(type="button",
+                                          data-target="#months",
+                                          data-months="september,october,november") Fall
+                li
+                  a.month-preset(type="button",
+                                          data-target="#months",
+                                          data-months="december,january,february") Winter
+          div
+            div.btn-group.btn-group-justified(data-toggle="buttons")
+              each val in ['january', 'february', 'march']
+                label.btn.btn-default.btn-sm.active
+                  input.month-toggle(id="month-"+val, name="month", type="checkbox", value=val, checked=true)
+                  | #{val[0].toUpperCase() + val.substring(1)}
+            div.btn-group.btn-group-justified(data-toggle="buttons")
+              each val in ['april', 'may', 'june']
+                label.btn.btn-default.btn-sm.active
+                  input.month-toggle(id="month-"+val, name="month", type="checkbox", value=val, checked=true)
+                  | #{val[0].toUpperCase() + val.substring(1)}
+            div.btn-group.btn-group-justified(data-toggle="buttons")
+              each val in ['july', 'august', 'september']
+                label.btn.btn-default.btn-sm.active
+                  input.month-toggle(id="month-"+val, name="month", type="checkbox", value=val, checked=true)
+                  | #{val[0].toUpperCase() + val.substring(1)}
+            div.btn-group.btn-group-justified(data-toggle="buttons")
+              each val in ['october', 'november', 'december']
+                label.btn.btn-default.btn-sm.active
+                  input.month-toggle(id="month-"+val, name="month", type="checkbox", value=val, checked=true)
+                  | #{val[0].toUpperCase() + val.substring(1)}
+        div.form-group
+          h4 Date Range
+          #date-range-container
+            .input-group.input-daterange
+              input#fromdate.form-control(type="text")
+              span.input-group-addon to
+              input#todate.form-control(type="text")
+  +appfile("range_slider")
+  +appfile("generic_time_criteria")
+  script(type="text/javascript").
+    $(() => { L.control.sidebar('time-sidebar', { position: 'left' }).addTo(document.map); });

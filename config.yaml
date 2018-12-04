@@ -1,0 +1,10 @@
+server:
+  host: 0.0.0.0
+  port: 31000
+  mode: paste
+# Contains database connection configurations.
+connection_path: ./connections
+# Default database configuration. Must match the name of a connection in the connection_path directory.
+connection: default_db
+# Where to dump access logs.
+log_path: ./logs/

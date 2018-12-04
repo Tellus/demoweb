@@ -1,0 +1,8 @@
+name: bbox_full
+database: itsp_test
+query: >-
+  select
+    st_asgeojson(st_extent(coordinates::geometry)) as bounding_box
+  from
+    experiments.dimbtbox
+result: json

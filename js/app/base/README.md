@@ -1,0 +1,1 @@
+This folder contains generic code shared between all ITSPX app modules.

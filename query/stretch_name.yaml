@@ -1,0 +1,13 @@
+name: stretchname
+query: >
+  SELECT name
+  FROM maps.osm_dk_latest
+  WHERE
+    segmentkey IN
+     (SELECT UNNEST(between_seg_id)
+      FROM experiments.dimbtstretch
+      WHERE stretchkey=%(stretch)s)
+  GROUP BY name
+  ORDER BY count(*) DESC
+  LIMIT 1
+result: scalar

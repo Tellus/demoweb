@@ -1,0 +1,25 @@
+name: closest_segment
+query: >-
+  with center as (
+    select st_makepoint(%(longitude)s, %(latitude)s)::geography as point
+  )
+  select
+    segmentkey,
+    startpoint,
+    endpoint,
+    name,
+    st_asgeojson(segmentgeo)::json as geojson,
+    st_asgeojson(st_closestpoint(segmentgeo::geometry, center.point::geometry))::json as closest_point
+  from
+    maps.osm_dk_latest, center
+  where
+    st_dwithin(
+      center.point,
+      segmentgeo,
+      %(threshold)s
+    )
+  order by
+    st_distance(center.point, segmentgeo)
+  asc
+  limit 1
+result: single

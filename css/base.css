@@ -1,0 +1,338 @@
+/* We give body a bit of padding since we don't use containers. */
+html, body, .container-fluid, .row {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.full-map {
+    height: 100%;
+}
+
+/* Modifications to Bootstrap modals to give them height and width. */
+
+.modal.modal-wide .modal-dialog {
+    width: 95%;
+}
+
+.modal-dialog,
+.modal-content {
+    height: 95%;
+}
+
+/*
+.modal-wide .modal-body {
+  overflow-y: auto;
+  max-height: calc(100% - 20px); 
+}*/
+
+/* Tab pane styling. */
+.stretch-tab-pane {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* For the BIG diff text. */
+.huge-diff-text {
+    font-size: 32px;
+}
+
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    z-index:1000;
+}
+#loading {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -100px;
+}
+
+/* Double-value range slider.
+ * Drawn from "Gary" on http://stackoverflow.com/questions/4753946/html5-form-slider-with-two-inputs-possible
+ */
+
+section.range-slider {
+    position: relative;
+    width: 100%;
+    margin: auto;
+    height: 35px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+section.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 15px;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+}
+
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    width: 9px;
+}
+
+section.range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 1);
+    border: 0;
+}
+section.range-slider input:last-of-type::-moz-range-track {
+    background: none transparent;
+    border: 0;
+}
+section.range-slider input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+
+.daisy-image-control {
+    background-color: white;
+    /* background-image: url('http://daisy.aau.dk/its/images/daisy-logo.jpg');*/
+    background-image: url('http://www.daisy.aau.dk/wp-content/uploads/2014/10/daisytransuk.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+    width:134px; /* you will likely need to specify image width and height here */
+    height:84px;
+    padding-top: 10px;
+}
+
+/*
+  ITSPX1-specific stylesheet stuff.
+*/
+
+.hidden {
+    display: none;
+}
+
+.map-overlay {
+    width: 15%;
+}
+
+.generic-time-sidebar {
+    max-width: 350px !important;
+}
+
+.generic-time-sidebar sidebar-pane{
+/*    min-width: 10px !important;*/
+}
+
+.bootstrap-datetime-picker {
+    position: absolute;
+    z-index: 50;
+}
+
+.new-tab-control {
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: gray;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.draggable-marker {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.draggable-marker:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.red-marker {
+    color: #F00;
+}
+
+.green-marker {
+    color: #0C0;
+}
+
+.blue-marker {
+    color: #55F;
+}
+
+.gray-marker {
+    color: #AAA;
+}
+
+.red-highlight {
+    -webkit-filter: drop-shadow(0px 0px 5px rgb(200,20,0));
+    filter: drop-shadow(0px 0px 5px rgb(200,20,0));
+}
+
+#ajax-cursor {
+    position: absolute;
+    z-index: 5000
+}
+
+.pins-list-content {
+    padding: 10px;
+}
+
+.sidebar {
+    height: 80%;
+}
+
+.table-container td,
+.table-container th {
+    padding: 10px;
+}
+
+.junction-time-metric td {
+    text-align: center;
+}
+
+.junction-time-header {
+    font-weight: bold;
+}
+
+.chart-container {
+    position: relative;
+    padding: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+.chart-dimmer-layer {
+
+}
+
+.table-container {
+    position: relative;
+    height: 85%;
+    width: 100%;
+}
+
+.button-container {
+}
+
+#chart-footer {
+    position: absolute;
+    bottom: 0px;
+}
+
+.chart-window {
+
+}
+
+.chart-window h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0px;
+    padding-bottom: 20px;
+    border-style-bottom: solid;
+}
+
+.zero-corner {
+    position: relative;
+}
+
+.zero-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-bottom-left-radius: 0px;
+}
+
+.pin-pair {
+    margin-bottom: 11px;
+}
+
+.pin-sidebar {
+    max-width: 300px;
+}
+
+.pin-pair table td {
+    font-weight: bold;
+    text-align: center;
+
+}
+
+/* Classes for the loaders and dimmers */
+.dimmer-content {
+    position: absolute;
+}
+
+.loading-spinner {
+    position: absolute;
+    left: calc(50% - 32px);
+    z-index: 20;
+    top: calc(50% - 32px);
+    color: #EEE;
+}
+
+.dimmed {
+    position: relative;
+    top: 0px;
+    bottom:0px;
+    left: 0px;
+    right: 0px;
+}
+
+.dimmed:after {
+    content: " ";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.bottom-drawer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#itspx1-dialog-grabber {
+    width: 100%;
+    background-color: #6666FF;
+    color: #FFFFFF;
+}
+
+.itspx1-dialog-header {
+    text-align: center;
+    padding-top: 3px;
+    margin-bottom: 3px;
+    cursor: grab;
+}
+
+.itspx1-close {
+    color: #FFFFFF;
+}

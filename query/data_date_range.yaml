@@ -1,0 +1,26 @@
+name: data_date_range
+query: >-
+  with st as (select
+                *
+              from
+                experiments.dimbtstretch
+              where
+                stretchkey=%(stretch)s),
+       ta as (select min(datekey) as min_datekey,
+                     max(datekey) as max_datekey
+              from
+                experiments.factbtstretchdata bt,
+                st
+              where
+                st.reportkey=bt.reportkey),
+       tb as (select min(datekey) as min_datekey,
+                     max(datekey) as max_datekey
+              from
+                mapmatched_data.point_match_osm_dk_latest,
+                st
+              where
+                segmentkey=any(st.between_seg_id))
+  select greatest(ta.min_datekey, tb.min_datekey) as min_datekey,
+         least(ta.max_datekey, tb.max_datekey) as max_datekey
+  from ta, tb;
+result: single

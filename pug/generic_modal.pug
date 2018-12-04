@@ -1,0 +1,12 @@
+#generic-modal.modal.fade(role="dialog")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true") &times;
+        h4#generic-modal-title.modal-title TITLE
+      #generic-modal-body.modal-body
+        CONTENT
+      .modal-footer
+        button.btn.btn-default(type="button", data-dismiss="modal") Ok
++appfile("modal")

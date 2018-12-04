@@ -1,0 +1,15 @@
+name: btboxes
+query: >-
+  SELECT
+    boxkey as bt_box_id,
+    segmentkey as segment_id,
+    st_asgeojson(coordinates)::json AS coords
+    FROM (SELECT DISTINCT
+      boxkey, segmentkey, coordinates
+      FROM
+        experiments.dimbtboxlocation,
+        experiments.dimbtstretch st
+      WHERE
+        st.enabled = true and
+        (st.from_locationkey=locationkey or st.to_locationkey=locationkey)
+    ) as tt

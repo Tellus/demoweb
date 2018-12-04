@@ -1,0 +1,6 @@
+name: shortest_path_geojson
+query: >-
+  select *
+  from
+    functionality.get_route_simple(%(fromlongitude)s, %(fromlatitude)s, %(tolongitude)s, %(tolatitude)s, 'maps.osm_dk_latest')
+result: single

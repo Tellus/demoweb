@@ -1,0 +1,13 @@
+name: shortest_path
+query: >-
+  SELECT
+    id2
+  FROM pgr_bddijkstra(
+    'SELECT segmentkey AS id, startpoint AS source, endpoint AS target,
+       CASE WHEN direction=''BACKWARD'' THEN -1 ELSE meters::float8 END as cost,
+       CASE WHEN direction=''FORWARD'' THEN -1 ELSE meters::float8 END AS reverse_cost
+     FROM maps.osm_dk_latest'::text,
+    %(startpoint)s,
+    %(endpoint)s,
+  true, true) WHERE id2>=0
+result: full

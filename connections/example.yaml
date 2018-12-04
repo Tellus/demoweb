@@ -1,0 +1,6 @@
+name: default_db
+host: 0.0.0.0
+port: 4101
+database: my_database
+user: username
+password: password

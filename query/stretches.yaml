@@ -1,0 +1,16 @@
+name: stretches
+query: >-
+  SELECT
+      stretchkey as stretch_id,
+      from_boxkey as from_box_id,
+      to_boxkey as to_box_id,
+      reportkey as report_id,
+      st_asgeojson(st_collect(segmentgeo::geometry))::json AS coords
+  FROM
+    experiments.dimbtstretch stretches,
+    maps.osm_dk_latest map
+  WHERE
+    map.segmentkey=any(stretches.between_seg_id) and
+    stretches.enabled=true
+  GROUP BY
+    stretch_id

@@ -1,0 +1,72 @@
+name: boxplot
+query: |-
+  with stretch as ( -- Key in stretch for starters.
+    select
+      *
+    from
+      experiments.dimbtstretch
+    where
+      stretchkey=%(stretch)s
+  ), intervals as ( -- The intervals are our padding factor for outer join.
+    select generate_series(%(time_from|default:0)s, %(time_to|default:1440)s-1, %(granularity|default:15)s)/%(granularity|default:15)s as interval
+  ), td as ( -- Assemble date dimension in one place.
+    select
+      *
+    from
+      dims.dimdate
+    where
+      datekey between replace('%(datekey_start)s', '/', '')::integer and replace('%(datekey_end)s', '/', '')::integer and
+      day_us_str::text=any(%(weekday|asarray|capitalize|enum:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday)s)
+  ), tk as ( -- Assemble time dimension in one place.
+    select
+      *
+    from
+      dims.dimtime
+    where
+      min_from_midnight between %(time_from|default:0)s and %(time_to|default:1440)s
+  ), gps_agg as ( -- Aggregated GPS data.
+    select
+      min_from_midnight/%(granularity|default:15)s as interval,
+      to_json(experiments.boxplot(speed)) as boxplot,
+      avg(speed) as avgspeed,
+      count(speed) as vehiclecount
+    from
+      mapmatched_data.point_match_osm_dk_latest ta,
+      tk, td, stretch
+    where
+      ta.segmentkey=any(stretch.between_seg_id) and
+      ta.datekey=td.datekey and
+      ta.timekey=tk.timekey
+    group by
+      min_from_midnight/%(granularity|default:15)s
+    order by
+      min_from_midnight/%(granularity|default:15)s
+  ), bt_agg as ( -- Aggregated BT data.
+    select
+      min_from_midnight/%(granularity|default:15)s as interval,
+      avg(avgspeed) as avgspeed,
+      sum(vehiclecount) as vehiclecount
+    from
+      experiments.factbtstretchdata ta,
+      tk, td, stretch
+    where
+      ta.reportkey=stretch.reportkey and
+      ta.datekey=td.datekey and
+      ta.timekey=tk.timekey
+    group by
+      min_from_midnight/%(granularity|default:15)s
+    order by
+      min_from_midnight/%(granularity|default:15)s
+  )
+  select
+    intervals.interval as interval,
+    %(granularity|default:15)s * intervals.interval as min_from_midnight,
+    gps_agg.boxplot as gps_boxplot,
+    gps_agg.avgspeed as gps_avgspeed,
+    gps_agg.vehiclecount as gps_vehiclecount,
+    bt_agg.avgspeed as bt_avgspeed,
+    bt_agg.vehiclecount as bt_vehiclecount
+  from
+    gps_agg
+    full join bt_agg on gps_agg.interval=bt_agg.interval
+    right outer join intervals on intervals.interval=gps_agg.interval and intervals.interval=bt_agg.interval

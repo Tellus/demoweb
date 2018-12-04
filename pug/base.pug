@@ -1,0 +1,71 @@
+// base.pug - contains base layout
+
+mixin appfile(module, name)
+  script(type="text/javascript", src="js/app/" + (name ? module : "base") + "/" + (name ? name : module) + ".js")
+mixin jsfile(url)
+  script(type="text/javascript", src=url)
+mixin cssfile(url)
+  link(rel="stylesheet", href=url)
+mixin jsbower(path)
+  script(type="text/javascript", src="lib/" + path)
+mixin cssbower(path)
+  link(rel="stylesheet", href="lib/" + path)
+  
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Daisy ITSPX - Junction Times
+
+    // The app's CSS.
+    +cssfile("css/base.css")
+
+    // jQuery
+    +jsbower("jquery/dist/jquery.min.js")
+      // Leaflet files.
+    +cssbower("leaflet/dist/leaflet.css")
+    +jsbower("leaflet/dist/leaflet.js")
+
+    //- jQueryUI
+    +jsbower("jquery-ui/jquery-ui.min.js")
+    
+    // Sidebar support
+    +cssfile("css/leaflet-sidebar.css")
+    +jsfile("js/leaflet-sidebar.js")
+
+    // FontAwesome icons.
+    +cssbower("font-awesome/css/font-awesome.min.css")
+
+    // Bootstrap
+    +cssbower("bootstrap/dist/css/bootstrap.min.css")
+    +cssbower("bootstrap/dist/css/bootstrap-theme.min.css")
+    +jsbower("bootstrap/dist/js/bootstrap.min.js")
+
+    // Experimental buttons.
+    // TODO: Remove. They aren't that nice with jQuery 3
+    +cssfile("css/easy-button.css")
+    +jsfile("js/easy-button.js")
+
+    +cssfile("css/Leaflet.Dialog.css")
+    +jsfile("js/Leaflet.Dialog.js")
+    
+    // Yet another alternative datetime picker for Bootstrap 3
+    +jsbower("moment/min/moment-with-locales.min.js")
+    +cssbower("pikaday/css/pikaday.css")
+    +jsbower("pikaday/pikaday.js")
+    
+    // Highcharts charting library (d3js incoming later?!)
+    +jsbower("highcharts/js/highcharts.js")
+    +jsbower("highcharts/js/highcharts-more.js")
+    +jsbower("highcharts/js/modules/exporting.js")
+
+    +appfile("ajax")
+    
+    block head
+
+    // Unused
+    //link(rel="stylesheet", href="")
+    //script(type="text/javascript", href="")
+  block content

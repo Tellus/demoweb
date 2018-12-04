@@ -1,0 +1,32 @@
+name: path_junctions
+description: Gets
+query: >-
+  with path as (
+    select id2
+    from pgr_bddijkstra(
+      'select segmentkey as id, startpoint as source, endpoint as target,
+         case when direction=''BACKWARD'' then -1 else meters::float8 as cost,
+         case when direction=''FORWARD'' then -1 else meters::float8 as reverse_cost
+       from maps.osm_dk_latest'::text,
+      %(startpoint)s,
+      %(endpoint)s,
+      true,
+      true)
+    where id2 >= 0
+    )
+  ), junctions as (
+    select distinct
+      startpoint
+    from
+      path
+    where
+      (select count(distinct segmentkey) from maps.osm_dk_latest map where path.startpoint=map.startpoint or path.startpoint=map.endpoint) > 2
+    union
+    select distinct
+      endpoint
+    from
+      path
+    where
+      (select count(distinct segmentkey) from maps.osm_dk_latest map where path.endpoint=map.startpoint or path.endpoint=map.endpoint) > 2
+  )
+result: full
